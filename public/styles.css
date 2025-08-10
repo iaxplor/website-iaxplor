@@ -168,7 +168,7 @@ body::before {
 /* Hamburguer (mobile) */
 .nav-toggle { display: none; }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav-toggle { display: inline-flex; flex-direction: column; gap: 4px; width: 40px; height: 40px; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); }
   .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--text-primary); transition: transform .2s ease, opacity .2s ease; }
   .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
@@ -188,6 +188,12 @@ body::before {
     display: inline-flex; align-items: center; /* alinha verticalmente */
 }
 .nav-menu li:last-child { margin-left: .25rem; }
+
+/* Páginas legais (termos/privacidade) */
+.legal-container { padding-top: 6rem; padding-bottom: 3rem; max-width: 900px; }
+.legal-header { margin-bottom: 2rem; }
+.legal-section h3 { margin: 1.5rem 0 1rem; }
+.legal-list { color: var(--text-secondary); line-height: 1.8; }
 
 /* Hero Section */
 .hero {
@@ -646,9 +652,8 @@ section {
 }
 
 /* Força 2 colunas em seções específicas com 4 cards */
-.features-grid.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
+.features-grid.grid-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 1024px) { .features-grid.grid-2 { grid-template-columns: 1fr; } }
 
 .feature-card {
     background: var(--bg-card);
@@ -721,12 +726,9 @@ section {
 }
 
 /* Conteúdo Section */
-.trilhas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
+.trilhas-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 3rem; }
+@media (min-width: 600px) { .trilhas-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } }
+@media (min-width: 1024px) { .trilhas-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
 
 .trilha-card {
     background: var(--bg-card);
@@ -1197,7 +1199,7 @@ section {
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .hero-title {
         font-size: 2.5rem;
     }

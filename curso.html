@@ -31,40 +31,7 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/styles.css" />
    <link rel="stylesheet" href="/assets/css/content.css" />
-  <style>
-    .course-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
-    .course-player { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-md); overflow: hidden; }
-    .course-frame { position: relative; width: 100%; padding-top: 56.25%; background:#000; }
-    .course-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; background:#000; }
-    .player-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color: var(--text-secondary); background:#000; }
-    .course-info { padding: 1rem; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
-    .course-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: .5rem; }
-    .course-desc { color: var(--text-secondary); }
-    .complete-btn { margin-left: auto; padding: .5rem .75rem; border-radius: 10px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.04); color: var(--text-primary); cursor: pointer; }
-    .complete-btn[disabled] { opacity: .45; cursor: default; }
-    .course-nav { margin-left: auto; display: flex; gap: .5rem; }
-    .nav-btn { padding: .5rem .75rem; border-radius: 10px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.04); color: var(--text-primary); cursor: pointer; }
-    .nav-btn[disabled] { opacity: .45; cursor: default; }
-    .course-sidebar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-md); overflow: hidden; }
-    .course-sidebar h3 { margin: 1rem; }
-    .trail-switch { display:flex; gap:.5rem; align-items:center; margin: 0 1rem .5rem; }
-    .trail-switch select { flex:1; padding:.5rem .6rem; border-radius:10px; border:1px solid var(--border-color); background: rgba(255,255,255,0.04); color: var(--text-primary); }
-    .trail-switch a { color: var(--primary-color); text-decoration: none; font-size:.9rem; }
-    .course-list { max-height: calc(100dvh - 220px); overflow: auto; padding: .5rem 1rem 1rem; }
-    .module-header { display: flex; justify-content: space-between; align-items: center; padding: .5rem 0; cursor: pointer; color: var(--text-secondary); font-weight: 600; background: transparent; border: 0; width: 100%; text-align: left; }
-    .module-header:hover { color: var(--text-primary); }
-    .module-list { display: grid; gap: .5rem; margin-bottom: .75rem; }
-    .course-item { padding: .75rem; border-radius: 10px; border: 1px solid transparent; display: grid; grid-template-columns: 48px 1fr auto; gap: .75rem; align-items: center; cursor: pointer; }
-    .course-item:hover { background: rgba(255,255,255,0.04); border-color: var(--border-color); }
-    .course-item.active { border-color: var(--primary-color); background: rgba(103,65,217,0.08); }
-    .course-thumb { width: 48px; height: 48px; background: var(--bg-secondary); border-radius: 6px; overflow: hidden; }
-    .course-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .badge-mini { display: inline-block; padding: .15rem .45rem; border-radius: 8px; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: .75rem; }
-    .course-progress { color: var(--text-secondary); font-size: .75rem; border: 1px solid var(--border-color); padding: .15rem .4rem; border-radius: 8px; }
-    .overall-progress { margin-left: auto; border: 1px solid var(--border-color); padding: .3rem .5rem; border-radius: 8px; color: var(--text-secondary); }
-    .status-icon { margin-right: .4rem; opacity: .9; }
-    @media (max-width: 980px) { .course-layout { grid-template-columns: 1fr; } .course-sidebar { order: -1; } }
-  </style>
+  
 </head>
 <body>
   <a href="#course-title" class="skip-link">Pular para conteúdo</a>

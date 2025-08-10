@@ -3,17 +3,19 @@ export function initNeural() {
     function boot(canvas) {
       const ctx = canvas.getContext('2d');
       const isMobile = matchMedia('(max-width: 768px)').matches;
-      const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
+      const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2);
       let width = 0;
       let height = 0;
       let rafId = 0;
       const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const NODE_SPEED = isMobile ? 0.18 : 0.22;
-      const NUM_NODES = isMobile ? 24 : 36;
-      const LINK_RADIUS = isMobile ? 200 : 240;
-      const PACKET_SPEED = isMobile ? 0.010 : 0.012;
-      const MAX_PACKETS = isMobile ? 8 : 12;
+      // Valores base; serão refinados após conhecer largura/altura
+      let NODE_SPEED = isMobile ? 0.14 : 0.20;
+      let NUM_NODES = isMobile ? 18 : 32;
+      let LINK_RADIUS = isMobile ? 180 : 240;
+      let PACKET_SPEED = isMobile ? 0.008 : 0.012;
+      let MAX_PACKETS = isMobile ? 5 : 10;
+      const MAX_LINKS_PER_NODE = isMobile ? 2 : 3;
       const DAMPING = 0.985;
       const MOUSE_RADIUS = 180;
       const MOUSE_FORCE = 0.0006;
@@ -27,6 +29,16 @@ export function initNeural() {
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       }
       resize();
+
+      // Ajusta densidade dinamicamente por área (menos redes no mobile/áreas pequenas)
+      (function calibrateByArea(){
+        const area = width * height; // px^2
+        const nodesPer100k = isMobile ? 3.5 : 6.5;
+        const minNodes = isMobile ? 12 : 22;
+        const maxNodes = isMobile ? 22 : 36;
+        NUM_NODES = Math.max(minNodes, Math.min(maxNodes, Math.floor((area / 100000) * nodesPer100k)));
+        LINK_RADIUS = Math.min(LINK_RADIUS, Math.floor(Math.min(width, height) * (isMobile ? 0.32 : 0.38)));
+      })();
       window.addEventListener('resize', resize);
 
       const nodes = Array.from({ length: NUM_NODES }).map(() => ({
@@ -99,6 +111,7 @@ export function initNeural() {
         });
 
         for (let i = 0; i < nodes.length; i++) {
+          let linksA = 0;
           for (let j = i + 1; j < nodes.length; j++) {
             const a = nodes[i];
             const b = nodes[j];
@@ -107,28 +120,32 @@ export function initNeural() {
             const dist2 = dx * dx + dy * dy;
             if (dist2 < LINK_RADIUS * LINK_RADIUS) {
               const alpha = 1 - Math.min(1, dist2 / (LINK_RADIUS * LINK_RADIUS));
-              ctx.strokeStyle = `rgba(103, 65, 217, ${0.18 * alpha})`;
-              ctx.lineWidth = 1;
+              ctx.strokeStyle = `rgba(103, 65, 217, ${ (isMobile ? 0.12 : 0.18) * alpha})`;
+              ctx.lineWidth = isMobile ? 0.8 : 1;
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
               ctx.lineTo(b.x, b.y);
               ctx.stroke();
+              linksA++;
+              if (linksA >= MAX_LINKS_PER_NODE) break;
             }
           }
         }
 
+        const coreR = isMobile ? 1.0 : 1.4;
+        const glowR = isMobile ? 3.5 : 4.5;
         nodes.forEach((n) => {
           ctx.fillStyle = 'rgba(255,255,255,0.85)';
           ctx.beginPath();
-          ctx.arc(n.x, n.y, 1.4, 0, Math.PI * 2);
+          ctx.arc(n.x, n.y, coreR, 0, Math.PI * 2);
           ctx.fill();
-          ctx.fillStyle = 'rgba(103,65,217,0.35)';
+          ctx.fillStyle = 'rgba(103,65,217,0.30)';
           ctx.beginPath();
-          ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2);
+          ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
           ctx.fill();
         });
 
-        const spawnChance = mouse.active ? 0.28 : 0.16;
+        const spawnChance = mouse.active ? (isMobile ? 0.16 : 0.24) : (isMobile ? 0.08 : 0.14);
         if (packets.length < MAX_PACKETS && Math.random() < spawnChance) spawnPacket(mouse.active);
         for (let i = packets.length - 1; i >= 0; i--) {
           const p = packets[i];

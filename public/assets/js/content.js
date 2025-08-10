@@ -4,7 +4,7 @@ function renderCards(trilhas) {
   cardsRoot.innerHTML = '';
   trilhas.forEach((t) => {
     const a = document.createElement('a');
-    a.href = `/curso.html?trilha=${encodeURIComponent(t.slug)}`;
+    a.href = `/curso?trilha=${encodeURIComponent(t.slug)}`;
     a.className = 'trilha-card-thumb';
     const img = document.createElement('img');
     img.alt = t.titulo;
@@ -47,7 +47,7 @@ function initLessonSearch(trilhas) {
         actions.style.marginTop = '0.5rem';
         const link = document.createElement('a');
         link.className = 'btn btn-primary';
-        link.href = `/curso.html?trilha=${encodeURIComponent(trilha.slug)}`;
+        link.href = `/curso?trilha=${encodeURIComponent(trilha.slug)}`;
         link.textContent = 'Abrir no curso';
         actions.appendChild(link);
         card.appendChild(h); card.appendChild(p); card.appendChild(actions);

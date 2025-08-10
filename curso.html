@@ -137,7 +137,9 @@
 
   <script>
     (async function() {
-      const params = new URLSearchParams(location.search);
+      // Suporta /curso e /curso.html
+      const url = new URL(location.href);
+      const params = url.searchParams;
       const slug = params.get('trilha');
       const res = await fetch(new URL('data/trilhas.json', document.baseURI));
       const trilhas = await res.json();
@@ -153,7 +155,8 @@
         trailSelect.value = trilha.slug;
         trailSelect.addEventListener('change', () => {
           const slugSel = trailSelect.value;
-          window.location.assign(`curso.html?trilha=${encodeURIComponent(slugSel)}`);
+          const base = location.pathname.replace(/\/curso(?:\.html)?$/, '/curso');
+          window.location.assign(`${base}?trilha=${encodeURIComponent(slugSel)}`);
         });
       }
 
@@ -463,7 +466,8 @@
           const trilhaIdx = trilhas.findIndex(t => t.slug === trilha.slug);
           if (trilhaIdx >= 0 && trilhaIdx < trilhas.length - 1) {
             const prox = trilhas[trilhaIdx + 1];
-            window.location.assign(`curso.html?trilha=${encodeURIComponent(prox.slug)}`);
+            const base = location.pathname.replace(/\/curso(?:\.html)?$/, '/curso');
+            window.location.assign(`${base}?trilha=${encodeURIComponent(prox.slug)}`);
           }
         } catch (e) { console.error('nextTrail error', e); }
       });

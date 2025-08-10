@@ -1,30 +1,30 @@
 function renderCards(trilhas) {
-    const cardsRoot = document.getElementById('cards-root');
-    if (!cardsRoot || !Array.isArray(trilhas)) return;
-    cardsRoot.innerHTML = '';
-    trilhas.forEach((t) => {
-      const a = document.createElement('a');
-      a.href = `curso.html?trilha=${encodeURIComponent(t.slug)}`;
-      a.className = 'trilha-card-thumb';
-      const img = document.createElement('img');
-      img.alt = t.titulo;
-      img.loading = 'lazy';
-      img.src = t.cover || '/assets/img/og-content.svg';
-      const body = document.createElement('div');
-      body.className = 'trilha-card-body';
-      const title = document.createElement('div');
-      title.className = 'trilha-card-title';
-      title.textContent = t.titulo;
-      const meta = document.createElement('div');
-      meta.className = 'trilha-card-meta';
-      meta.textContent = `${(t.modulos||[]).length} módulos • ${(t.modulos||[]).reduce((acc,m)=>acc+(m.aulas?m.aulas.length:0),0)} aulas`;
-      body.appendChild(title); body.appendChild(meta);
-      a.appendChild(img); a.appendChild(body);
-      cardsRoot.appendChild(a);
-    });
-  }
+  const cardsRoot = document.getElementById('cards-root');
+  if (!cardsRoot || !Array.isArray(trilhas)) return;
+  cardsRoot.innerHTML = '';
+  trilhas.forEach((t) => {
+    const a = document.createElement('a');
+    a.href = `curso.html?trilha=${encodeURIComponent(t.slug)}`;
+    a.className = 'trilha-card-thumb';
+    const img = document.createElement('img');
+    img.alt = t.titulo;
+    img.loading = 'lazy';
+    img.src = t.cover || '/assets/img/og-content.svg';
+    const body = document.createElement('div');
+    body.className = 'trilha-card-body';
+    const title = document.createElement('div');
+    title.className = 'trilha-card-title';
+    title.textContent = t.titulo;
+    const meta = document.createElement('div');
+    meta.className = 'trilha-card-meta';
+    meta.textContent = `${(t.modulos||[]).length} módulos • ${(t.modulos||[]).reduce((acc,m)=>acc+(m.aulas?m.aulas.length:0),0)} aulas`;
+    body.appendChild(title); body.appendChild(meta);
+    a.appendChild(img); a.appendChild(body);
+    cardsRoot.appendChild(a);
+  });
+}
 
-  function initLessonSearch(trilhas) {
+function initLessonSearch(trilhas) {
     const input = document.getElementById('lesson-search');
     const root = document.getElementById('lesson-results');
     if (!input || !root) return;
@@ -69,7 +69,6 @@ function renderCards(trilhas) {
         render(filtered);
       }, 220);
     });
-  }
 }
 
 // Inicializar quando DOM estiver pronto

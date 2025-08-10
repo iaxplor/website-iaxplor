@@ -1,0 +1,75 @@
+[
+  {
+    "titulo": "Fundamentos de IA para Negócios",
+    "slug": "fundamentos-ia",
+    "nivel": "Iniciante",
+    "cover": "/assets/img/covers/fundamentos.svg",
+    "modulos": [
+      {
+        "titulo": "Introdução à Inteligência Artificial",
+        "aulas": [
+          {
+            "titulo": "O que é IA e como pode transformar seu negócio",
+            "youtubeId": "dQw4w9WgXcQ",
+            "duracao": "15 min",
+            "materiais": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Automações Inteligentes",
+    "slug": "automacoes",
+    "nivel": "Intermediário",
+    "cover": "/assets/img/covers/automacoes.svg",
+    "modulos": [
+      {
+        "titulo": "Zapier e Make (Integromat)",
+        "aulas": [
+          {
+            "titulo": "Configurando sua primeira automação",
+            "youtubeId": "",
+            "duracao": "20 min",
+            "materiais": [
+              {
+                "label": "Template de Automação - CRM",
+                "url": "https://raw.githubusercontent.com/user/repo/main/templates/crm-automation.zip",
+                "id": "tpl-crm-auto",
+                "isTemplate": true,
+                "featured": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Agentes de IA",
+    "slug": "agentes-ia",
+    "nivel": "Avançado",
+    "cover": "/assets/img/covers/agentes.svg",
+    "modulos": [
+      {
+        "titulo": "Criando Agentes Personalizados",
+        "aulas": [
+          {
+            "titulo": "Arquitetura de agentes inteligentes",
+            "youtubeId": "dQw4w9WgXcQ",
+            "duracao": "25 min",
+            "materiais": [
+              {
+                "label": "Guia de Implementação - Agentes",
+                "url": "https://raw.githubusercontent.com/user/repo/main/guides/agent-implementation.pdf",
+                "id": "guide-agents",
+                "isTemplate": true,
+                "featured": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

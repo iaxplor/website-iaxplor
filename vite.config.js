@@ -14,11 +14,8 @@ export default defineConfig({
         termos: resolve(__dirname, 'termos.html'),
         privacidade: resolve(__dirname, 'privacidade.html')
       }
-    },
-    assetsInlineLimit: 0,
-    copyPublicDir: true
+    }
   },
-  publicDir: 'data',
   preview: {
     allowedHosts: ['www.iaxplor.com', 'iaxplor.com'],
     host: '0.0.0.0',

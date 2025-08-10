@@ -1,10 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-  fetch(new URL('data/trilhas.json', document.baseURI))
-    .then((r) => r.json())
-    .then((trilhas) => { renderCards(trilhas); initLessonSearch(trilhas); })
-    .catch(() => {});
-
-  function renderCards(trilhas) {
+function renderCards(trilhas) {
     const cardsRoot = document.getElementById('cards-root');
     if (!cardsRoot || !Array.isArray(trilhas)) return;
     cardsRoot.innerHTML = '';
@@ -76,6 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 220);
     });
   }
+}
+
+// Inicializar quando DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+  fetch(new URL('data/trilhas.json', document.baseURI))
+    .then((r) => r.json())
+    .then((trilhas) => { renderCards(trilhas); initLessonSearch(trilhas); })
+    .catch(() => {});
 });
 
 

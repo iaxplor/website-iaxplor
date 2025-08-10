@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { copyFileSync, mkdirSync } from 'fs';
 
 export default defineConfig({
   server: { port: 5173 },
@@ -16,6 +17,19 @@ export default defineConfig({
       }
     }
   },
+  plugins: [
+    {
+      name: 'copy-data',
+      writeBundle() {
+        try {
+          mkdirSync(resolve(__dirname, 'dist/data'), { recursive: true });
+          copyFileSync(resolve(__dirname, 'data/trilhas.json'), resolve(__dirname, 'dist/data/trilhas.json'));
+        } catch (e) {
+          console.warn('Failed to copy trilhas.json:', e.message);
+        }
+      }
+    }
+  ],
   preview: {
     allowedHosts: ['www.iaxplor.com', 'iaxplor.com'],
     host: '0.0.0.0',

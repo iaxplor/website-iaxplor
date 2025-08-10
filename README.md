@@ -16,9 +16,10 @@ Estrutura
 ---------
 
 - `index.html`, `conteudo.html`, `templates.html`, `curso.html`
-- `assets/css/` – estilos por página e globais (`styles.css` ainda na raiz por compatibilidade)
-- `assets/js/` – scripts por página + utilidades
-- `data/trilhas.json` – fonte de dados
+- `public/assets/css/` – estilos por página e globais (`styles.css` ainda na raiz por compatibilidade)
+- `public/assets/js/` – scripts por página + utilidades
+- `public/data/trilhas.json` – fonte de dados
+- `public/manifest.json` – configuração PWA
 - `sw.js` – service worker
 
 Desenvolvimento

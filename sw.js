@@ -2,7 +2,7 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
 
 // Versão para controle manual de cache bust
-const VERSION = 'v2.0.0';
+const VERSION = 'v2.1.0';
 
 // Ativa imediatamente a nova versão
 self.addEventListener('install', () => self.skipWaiting());
@@ -23,7 +23,13 @@ workbox.precaching.precacheAndRoute([
   { url: '/assets/js/modules/neural.js', revision: VERSION },
   { url: '/assets/img/logo.svg', revision: VERSION },
   { url: '/assets/img/favicon.svg', revision: VERSION },
-  { url: '/data/trilhas.json', revision: VERSION }
+  { url: '/assets/img/icon-192.svg', revision: VERSION },
+  { url: '/assets/img/icon-512.svg', revision: VERSION },
+  { url: '/assets/img/covers/fundamentos.svg', revision: VERSION },
+  { url: '/assets/img/covers/agentes.svg', revision: VERSION },
+  { url: '/assets/img/covers/automacoes.svg', revision: VERSION },
+  { url: '/data/trilhas.json', revision: VERSION },
+  { url: '/manifest.json', revision: VERSION }
 ]);
 
 // Documentos: NetworkFirst com fallback

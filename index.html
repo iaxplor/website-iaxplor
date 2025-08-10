@@ -42,7 +42,7 @@
       // Render templates em destaque (3 itens) a partir de data/trilhas.json (apenas isTemplate)
       document.addEventListener('DOMContentLoaded', async () => {
         try {
-          const res = await fetch('/data/trilhas.json');
+          const res = await fetch(new URL('data/trilhas.json', document.baseURI));
           const trilhas = await res.json();
           const all = [];
           (trilhas||[]).forEach(t => (t.modulos||[]).forEach(m => (m.aulas||[]).forEach(a => {

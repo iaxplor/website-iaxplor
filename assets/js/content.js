@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('/data/trilhas.json')
+  fetch(new URL('data/trilhas.json', document.baseURI))
     .then((r) => r.json())
     .then((trilhas) => { renderCards(trilhas); initLessonSearch(trilhas); })
     .catch(() => {});

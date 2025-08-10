@@ -44,7 +44,7 @@ export function initMobileMenu() {
 export function initMetrics() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const metricEls = document.querySelectorAll('.metric-number');
-  fetch('/data/trilhas.json')
+  fetch(new URL('data/trilhas.json', document.baseURI))
     .then((r) => r.json())
     .then((trilhas) => {
       try {

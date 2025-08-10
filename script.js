@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const metricEls = document.querySelectorAll('.metric-number');
   // Se disponível, calcula valores dinâmicos a partir de data/trilhas.json
-  fetch('/data/trilhas.json').then(r => r.json()).then((trilhas) => {
+  fetch('data/trilhas.json').then(r => r.json()).then((trilhas) => {
     try {
       const totalTrilhas = Array.isArray(trilhas) ? trilhas.length : 0;
       const aulas = (trilhas||[]).flatMap(t => (t.modulos||[]).flatMap(m => m.aulas||[]));

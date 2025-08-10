@@ -139,7 +139,7 @@
     (async function() {
       const params = new URLSearchParams(location.search);
       const slug = params.get('trilha');
-      const res = await fetch('/data/trilhas.json');
+      const res = await fetch(new URL('data/trilhas.json', document.baseURI));
       const trilhas = await res.json();
       const trilha = trilhas.find(t => t.slug === slug) || trilhas[0];
       if (!trilha) return;

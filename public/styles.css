@@ -165,6 +165,21 @@ body::before {
     text-shadow: var(--glow-blue);
 }
 
+/* Hamburguer (mobile) */
+.nav-toggle { display: none; }
+
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; flex-direction: column; gap: 4px; width: 40px; height: 40px; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); }
+  .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--text-primary); transition: transform .2s ease, opacity .2s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .nav-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(12, 12, 14, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: .75rem 1rem 1rem; flex-direction: column; align-items: stretch; }
+  .nav-menu.open { display: flex; }
+  .nav-menu a { padding: .75rem 1rem; border-radius: 10px; }
+}
+
 /* CTA no menu */
 .nav-menu .btn {
     padding: 0.5rem 1rem;
@@ -1200,6 +1215,7 @@ section {
     }
     
     .features-grid,
+    .features-grid.grid-2,
     .trilhas-grid,
     .depoimentos-grid {
         grid-template-columns: 1fr;

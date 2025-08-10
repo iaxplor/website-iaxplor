@@ -34,10 +34,18 @@
     --shadow-lg: 0 10px 15px -3px rgba(var(--primary-rgb), 0.12), 0 4px 6px -4px rgba(var(--primary-rgb), 0.08);
     --shadow-xl: 0 20px 25px -5px rgba(var(--primary-rgb), 0.16), 0 8px 10px -6px rgba(var(--primary-rgb), 0.10);
     --glow-blue: 0 0 20px rgba(var(--primary-rgb), 0.35); /* compat */
+
+    /* Tipografia fluida */
+    --font-sm: clamp(0.95rem, 0.85rem + 0.4vw, 1.05rem);
+    --font-md: clamp(1rem, 0.9rem + 0.6vw, 1.125rem);
+    --font-lg: clamp(1.125rem, 1rem + 1vw, 1.5rem);
+    --font-xl: clamp(1.5rem, 1.2rem + 2vw, 2.25rem);
+    --font-2xl: clamp(2rem, 1.5rem + 3vw, 3rem);
 }
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: var(--font-md);
     line-height: 1.6;
     color: var(--text-primary);
     background: radial-gradient(1200px 800px at 20% 10%, rgba(var(--primary-rgb),0.08), transparent 40%),
@@ -202,7 +210,7 @@ body::before {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: var(--font-2xl);
     font-weight: 800;
     margin-bottom: 1.5rem;
     line-height: 1.1;
@@ -574,7 +582,7 @@ section {
 }
 
 .section-header h2 {
-    font-size: 2.5rem;
+    font-size: var(--font-xl);
     font-weight: 700;
     margin-bottom: 1rem;
     color: var(--text-primary);
@@ -677,7 +685,7 @@ section {
 }
 
 .feature-card h3 {
-    font-size: 1.5rem;
+    font-size: var(--font-lg);
     font-weight: 700;
     margin-bottom: 1rem;
     color: var(--text-primary);
@@ -1003,7 +1011,7 @@ section {
 }
 
 .cta-final h2 {
-    font-size: 3rem;
+    font-size: var(--font-2xl);
     margin-bottom: 1rem;
     position: relative;
     z-index: 2;
@@ -1015,7 +1023,7 @@ section {
 }
 
 .cta-final p {
-    font-size: 1.25rem;
+    font-size: var(--font-lg);
     margin-bottom: 2rem;
     opacity: 0.9;
     position: relative;
@@ -1158,7 +1166,7 @@ section {
 .floating-cta {
     position: fixed;
     right: 20px;
-    bottom: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
     z-index: 1100;
 }
 .floating-cta .btn {

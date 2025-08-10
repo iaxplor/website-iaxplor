@@ -51,7 +51,7 @@
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .trilha-card-thumb:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
-.trilha-card-thumb img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.trilha-card-thumb img { width: 100%; height: clamp(160px, 28vw, 220px); object-fit: cover; display: block; }
 .trilha-card-body { padding: 1rem 1.25rem; }
 .trilha-card-title { font-weight: 700; color: var(--text-primary); margin-bottom: .25rem; }
 .trilha-card-meta { color: var(--text-secondary); font-size: .9rem; }

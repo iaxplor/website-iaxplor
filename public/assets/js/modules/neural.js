@@ -2,17 +2,18 @@ export function initNeural() {
   try {
     function boot(canvas) {
       const ctx = canvas.getContext('2d');
-      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const isMobile = matchMedia('(max-width: 768px)').matches;
+      const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
       let width = 0;
       let height = 0;
       let rafId = 0;
       const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const NODE_SPEED = 0.22;
-      const NUM_NODES = 36;
-      const LINK_RADIUS = 240;
-      const PACKET_SPEED = 0.012;
-      const MAX_PACKETS = 12;
+      const NODE_SPEED = isMobile ? 0.18 : 0.22;
+      const NUM_NODES = isMobile ? 24 : 36;
+      const LINK_RADIUS = isMobile ? 200 : 240;
+      const PACKET_SPEED = isMobile ? 0.010 : 0.012;
+      const MAX_PACKETS = isMobile ? 8 : 12;
       const DAMPING = 0.985;
       const MOUSE_RADIUS = 180;
       const MOUSE_FORCE = 0.0006;

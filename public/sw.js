@@ -2,7 +2,7 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
 
 // Versão para controle manual de cache bust
-const VERSION = 'v2.1.0';
+const VERSION = 'v2.2.0';
 
 // Ativa imediatamente a nova versão
 self.addEventListener('install', () => self.skipWaiting());
@@ -28,7 +28,7 @@ workbox.precaching.precacheAndRoute([
   { url: '/assets/img/covers/fundamentos.svg', revision: VERSION },
   { url: '/assets/img/covers/agentes.svg', revision: VERSION },
   { url: '/assets/img/covers/automacoes.svg', revision: VERSION },
-  { url: '/data/trilhas.json', revision: VERSION },
+  // Dados não devem ser precacheados para evitar stale
   { url: '/manifest.json', revision: VERSION }
 ]);
 
@@ -59,6 +59,12 @@ workbox.routing.registerRoute(
       new workbox.expiration.ExpirationPlugin({ maxEntries: 60, maxAgeSeconds: 30 * 24 * 60 * 60 })
     ]
   })
+);
+
+// Dados: StaleWhileRevalidate para JSON dinâmico
+workbox.routing.registerRoute(
+  ({ url }) => url.pathname === '/data/trilhas.json',
+  new workbox.strategies.StaleWhileRevalidate({ cacheName: 'data-trilhas' })
 );
 
 // Downloads de materiais (GitHub/raw): CacheFirst

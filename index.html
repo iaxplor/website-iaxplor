@@ -36,7 +36,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js').catch(()=>{});
+          navigator.serviceWorker.register('/sw.js').then(()=>caches.keys().then(keys=>keys.forEach(c=>c.startsWith('workbox-')&&caches.delete(c)))).catch(()=>{});
         });
       }
       // Render templates em destaque (3 itens) a partir de data/trilhas.json (apenas isTemplate)

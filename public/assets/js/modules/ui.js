@@ -121,12 +121,19 @@ export function initLucide() {
       }, 100);
     }
 
-    // Reaplica para nós inseridos dinamicamente
-    document.addEventListener('DOMNodeInserted', (e) => {
-      if (e.target && (e.target.matches?.('i[data-lucide]') || e.target.querySelector?.('i[data-lucide]'))) {
-        apply();
+    // Reaplica para nós inseridos dinamicamente (MutationObserver)
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (!(node instanceof Element)) continue;
+          if (node.matches?.('i[data-lucide]') || node.querySelector?.('i[data-lucide]')) {
+            apply();
+            return;
+          }
+        }
       }
     });
+    observer.observe(document.body, { childList: true, subtree: true });
   } catch (_) {}
 }
 

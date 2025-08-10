@@ -7,7 +7,7 @@
   <meta name="description" content="Assista às aulas e implemente IA com materiais práticos da trilha selecionada." />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#6741d9" />
-  <link rel="canonical" href="https://iaxplor.com/curso.html" />
+  <link rel="canonical" href="https://iaxplor.com/curso" />
   <meta name="content-language" content="pt-BR" />
   <script defer src="https://unpkg.com/lucide@0.539.0/dist/umd/lucide.min.js"></script>
   <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
@@ -17,7 +17,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Curso - IAxplor" />
   <meta property="og:description" content="Assista às aulas e acompanhe o programa da trilha selecionada." />
-  <meta property="og:url" content="https://iaxplor.com/curso.html" />
+  <meta property="og:url" content="https://iaxplor.com/curso" />
   <meta property="og:image" content="https://iaxplor.com/assets/img/og-content.svg" />
 
   <!-- Twitter -->
@@ -283,9 +283,9 @@
 
       function syncMetaForTrilha(trilha) {
         const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.setAttribute('href', `https://iaxplor.com/curso.html?trilha=${encodeURIComponent(trilha.slug)}`);
+        if (canonical) canonical.setAttribute('href', `https://iaxplor.com/curso?trilha=${encodeURIComponent(trilha.slug)}`);
         const ogUrl = document.querySelector('meta[property="og:url"]');
-        if (ogUrl) ogUrl.setAttribute('content', `https://iaxplor.com/curso.html?trilha=${encodeURIComponent(trilha.slug)}`);
+        if (ogUrl) ogUrl.setAttribute('content', `https://iaxplor.com/curso?trilha=${encodeURIComponent(trilha.slug)}`);
         const titleText = `${trilha.titulo} • IAxplor`;
         document.title = titleText;
         const ogTitle = document.querySelector('meta[property="og:title"]');

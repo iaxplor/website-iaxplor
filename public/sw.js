@@ -14,7 +14,7 @@ workbox.precaching.precacheAndRoute([
   { url: '/index.html', revision: VERSION },
   { url: '/conteudo.html', revision: VERSION },
   { url: '/templates.html', revision: VERSION },
-  { url: '/curso.html', revision: VERSION },
+  { url: '/curso', revision: VERSION },
   { url: '/styles.css', revision: VERSION },
   { url: '/assets/css/content.css', revision: VERSION },
   { url: '/assets/js/main.js', revision: VERSION },

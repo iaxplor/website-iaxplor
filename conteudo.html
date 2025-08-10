@@ -26,6 +26,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').catch(()=>{});
+        });
+      }
+    </script>
      <script defer src="https://unpkg.com/lucide@0.539.0/dist/umd/lucide.min.js"></script>
      <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
     <!-- Sem .ico no projeto -->
@@ -194,8 +201,8 @@
       })();
     </script>
 
-    <script type="module" src="/assets/js/main.js"></script>
-    <script type="module" src="/assets/js/content.js"></script>
+    <script type="module" src="/assets/js/main.js?v=20250810"></script>
+    <script type="module" src="/assets/js/content.js?v=20250810"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function(){
         if (window.lucide && lucide.createIcons) {

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Conteúdo - IAxplor</title>
+    <meta name="description" content="Central de Conteúdo IAxplor: trilhas, módulos e aulas com vídeos do YouTube e templates para implementar IA, agentes e automações de processos.">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#6741d9">
+    <link rel="canonical" href="https://iaxplor.com/conteudo.html">
+    <meta name="content-language" content="pt-BR">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Central de Conteúdo - IAxplor">
+    <meta property="og:description" content="Trilhas e módulos com vídeos e templates para implementar IA no seu negócio.">
+    <meta property="og:url" content="https://iaxplor.com/conteudo.html">
+    <meta property="og:image" content="https://iaxplor.com/assets/img/og-content.svg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Central de Conteúdo - IAxplor">
+    <meta name="twitter:description" content="Trilhas e módulos com vídeos e templates para implementar IA no seu negócio.">
+    <meta name="twitter:image" content="https://iaxplor.com/assets/img/og-content.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="styles.css">
+     <script defer src="https://unpkg.com/lucide@0.539.0/dist/umd/lucide.min.js"></script>
+     <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+     <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+    <link rel="stylesheet" href="assets/css/content.css">
+
+    <!-- JSON-LD: coleção de cursos/learning content (estático por enquanto) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Central de Conteúdo IAxplor",
+      "about": "Trilhas e módulos para implementar IA em negócios",
+      "hasPart": [
+        {
+          "@type": "Course",
+          "name": "Fundamentos de IA",
+          "description": "Conceitos essenciais e primeiros passos para IA",
+          "provider": { "@type": "Organization", "name": "IAxplor" }
+        },
+        {
+          "@type": "Course",
+          "name": "Agentes de IA",
+          "description": "Criação e integração de agentes conversacionais",
+          "provider": { "@type": "Organization", "name": "IAxplor" }
+        },
+        {
+          "@type": "Course",
+          "name": "Automações Avançadas",
+          "description": "Workflows e integrações escaláveis",
+          "provider": { "@type": "Organization", "name": "IAxplor" }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#cards-root" class="skip-link">Pular para conteúdo</a>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo" aria-label="IAxplor Home">
+                    <img src="assets/img/logo.svg" alt="IAxplor" class="logo-img">
+                </a>
+                <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                 <ul class="nav-menu" role="navigation" aria-label="Principal">
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#sobre">Sobre</a></li>
+                    <li><a href="conteudo.html" class="active">Conteúdo</a></li>
+                    <li><a href="templates.html">Templates</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero da Central de Conteúdo (mesmo estilo da página de templates) -->
+    <section class="templates-hero">
+        <div class="container container-foreground">
+            <div class="section-header section-header--toppad">
+                <h2>Central de Conteúdo</h2>
+                <p>Trilhas com vídeos e materiais práticos para aplicar IA no seu negócio.</p>
+            </div>
+        </div>
+        <div class="hero-bg-elements" aria-hidden="true">
+            <canvas class="neural-canvas"></canvas>
+        </div>
+    </section>
+
+  <!-- removido: bloco de prova social -->
+
+
+
+    <!-- Busca de Aulas -->
+    <section class="content-search-section">
+        <div class="container">
+            <div class="content-search" role="search">
+                <input id="lesson-search" type="search" placeholder="Busque por aula, módulo ou trilha..." aria-label="Buscar aulas" />
+            </div>
+            <div id="lesson-results" class="trilhas-grid" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- Cards de Trilhas (apenas visão geral) -->
+    <section class="cards-section">
+        <div class="container">
+            <div id="cards-root" class="trilhas-grid" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- FAQ curto -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Dúvidas comuns</h2>
+          <p>Como aproveitar melhor as trilhas</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Por onde começo?</summary>
+            <div>Se quer aprender do zero, comece pela trilha Fundamentos. Se quer resultado rápido, vá aos Templates e escolha um caso.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Tem materiais para baixar?</summary>
+            <div>Sim. Em cada aula com materiais, você pode baixar direto aqui no site.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Posso pedir ajuda?</summary>
+            <div>Entre no grupo gratuitamente pelo botão no canto — peça feedback e dicas quando travar.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IAxplor</h3>
+                    <p>Comunidade de IA para empreendedores e profissionais</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#sobre">Sobre</a></li>
+                        <li><a href="conteudo.html">Conteúdo</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                        <li><a href="/termos.html" rel="noopener">Termos de Uso</a></li>
+                        <li><a href="/privacidade.html" rel="noopener">Privacidade</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>bruno@iaxplor.com</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">YouTube</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 IAxplor. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CTA flutuante: ajuda na comunidade (Tally) -->
+    <div class="floating-cta">
+        <button class="btn btn-primary btn-large" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Travou? Peça ajuda na comunidade">Travou? Peça Ajuda na Comunidade</button>
+    </div>
+
+    <!-- Tally embed -->
+    <script>
+      (function(){
+        var d=document,s=d.createElement('script');
+        s.src='https://tally.so/widgets/embed.js';
+        s.async=true;
+        s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&rs!='complete'&&rs!='loaded')return; if(typeof Tally!=='undefined') Tally.loadEmbeds();};
+        d.body.appendChild(s);
+      })();
+    </script>
+
+    <script type="module" src="/assets/js/main.js"></script>
+    <script src="assets/js/content.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        if (window.lucide && lucide.createIcons) {
+          lucide.createIcons({ attrs: { stroke: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#6741d9', 'stroke-width': 1.5 } });
+        }
+      });
+    </script>
+</body>
+</html>

@@ -3,30 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site Incrível</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #111;
-            color: #eee;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
+    <title>IAxplor - Comunidade de IA para Negócios</title>
+    <meta name="description" content="Junte-se à IAxplor: comunidade para te ajudar a implementar IA, agentes e automações no seu negócio. Conteúdo gratuito, networking e templates.">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#6741d9">
+    <link rel="canonical" href="https://iaxplor.com/">
+    <meta name="content-language" content="pt-BR">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="IAxplor - Comunidade de IA para Negócios">
+    <meta property="og:description" content="Aprenda e implemente IA com trilhas, templates e uma comunidade ativa.">
+    <meta property="og:url" content="https://iaxplor.com/">
+    <meta property="og:image" content="https://iaxplor.com/assets/img/og-image.svg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IAxplor - Comunidade de IA para Negócios">
+    <meta name="twitter:description" content="Aprenda e implemente IA com trilhas, templates e uma comunidade ativa.">
+    <meta name="twitter:image" content="https://iaxplor.com/assets/img/og-image.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+    <link rel="mask-icon" href="/assets/img/logo.svg" color="#6741d9">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://unpkg.com/lucide@0.539.0/dist/umd/lucide.min.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').catch(()=>{});
+        });
+      }
+      // Render templates em destaque (3 itens) a partir de data/trilhas.json (apenas isTemplate)
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          const res = await fetch('/data/trilhas.json');
+          const trilhas = await res.json();
+          const all = [];
+          (trilhas||[]).forEach(t => (t.modulos||[]).forEach(m => (m.aulas||[]).forEach(a => {
+            (a.materiais||[]).filter(x => x.isTemplate).forEach(mat => all.push({ trilha: t.titulo, aula: a.titulo, label: mat.label, url: mat.url, featured: !!mat.featured }));
+          })));
+          const featured = [...all.filter(x=>x.featured), ...all.filter(x=>!x.featured)].slice(0,3);
+          const root = document.getElementById('tpl-featured');
+          if (root && featured.length) {
+            featured.forEach(it => {
+              const card = document.createElement('div');
+              card.className = 'trilha-card';
+              const head = document.createElement('div');
+              head.className = 'trilha-header';
+              head.innerHTML = `<h3>${it.label}</h3><span class="badge">${it.featured ? 'Destaque' : 'Template'}</span>`;
+              const p = document.createElement('p');
+              p.textContent = `${it.trilha} • ${it.aula}`;
+              const actions = document.createElement('div');
+              actions.style.marginTop = '0.5rem';
+              const dl = document.createElement('a');
+              dl.className = 'btn btn-primary download-direct';
+              dl.setAttribute('data-url', it.url);
+              dl.setAttribute('data-filename', (it.label||'arquivo').replace(/\s+/g,'_'));
+              dl.href = '#';
+              dl.textContent = 'Baixar';
+              actions.appendChild(dl);
+              card.appendChild(head); card.appendChild(p); card.appendChild(actions);
+              root.appendChild(card);
+            });
+          }
+        } catch(_) {}
+      });
+    </script>
+    
+    <!-- JSON-LD Organization + WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "IAxplor",
+      "url": "https://iaxplor.com/",
+      "logo": "https://iaxplor.com/assets/img/logo.svg",
+      "sameAs": [
+        "https://www.youtube.com/", 
+        "https://www.linkedin.com/"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://iaxplor.com/",
+      "name": "IAxplor",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://iaxplor.com/conteudo?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <!-- JSON-LD FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O acesso à comunidade no WhatsApp é gratuito?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Sim. O acesso ao grupo é gratuito para tirar dúvidas, se conectar e acompanhar novidades."}
+        },
+        {
+          "@type": "Question",
+          "name": "Como funcionam as trilhas de conteúdo?",
+          "acceptedAnswer": {"@type": "Answer", "text": "As trilhas são divididas em módulos e aulas. Cada aula pode ter vídeo no YouTube e materiais práticos hospedados no GitHub."}
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso de experiência prévia em IA?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Não. Temos trilhas para níveis Básico, Intermediário e Avançado."}
+        },
+        {
+          "@type": "Question",
+          "name": "Posso divulgar meu trabalho no grupo?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Sim. Incentivamos networking, parcerias e a divulgação de trabalhos relevantes para a comunidade."}
+        },
+        {
+          "@type": "Question",
+          "name": "Onde encontro os arquivos e templates?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Os materiais ficam anexados às aulas e são hospedados no GitHub, com acesso direto via site."}
         }
-        h1 {
-            font-size: 3rem;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 10px;
-        }
-    </style>
+      ]
+    }
+    </script>
 </head>
 <body>
-    <div>
-        <h1>Olá, Mundo!</h1>
-        <p>Meu site está a caminho de ficar online.</p>
+    <a href="#home" class="skip-link">Pular para conteúdo</a>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo" aria-label="IAxplor Home">
+                    <img src="assets/img/logo.svg" alt="IAxplor" class="logo-img">
+                </a>
+                <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <ul class="nav-menu" role="navigation" aria-label="Principal">
+                    <li><a href="#home" aria-current="page">Home</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#conteudo">Conteúdo</a></li>
+                    <li><a href="templates.html">Templates</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                    <li>
+                      <button class="btn btn-secondary" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Pedir ajuda na comunidade">Pedir ajuda</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Elementos visuais de fundo -->
+        <div class="hero-bg-elements" aria-hidden="true">
+            <canvas id="hero-neural" class="neural-canvas"></canvas>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <div class="icon-container" aria-hidden="true">
+                        <img src="assets/img/logo_icon.svg" alt="" width="64" height="64" loading="lazy" />
+                    </div>
+                </div>
+                
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Convites limitados • +450 membros ativos
+                </div>
+                
+                <h1 class="hero-title">
+                    Construa Soluções <br><span class="highlight">Sob Medida com</span><br> IA para Negócios
+                </h1>
+                <p class="hero-subtitle">
+                    Lance seu projeto com <strong>templates prontos</strong> e otimize seu negócio com guias passo a passo e suporte no grupo.
+                </p>
+                
+                <!-- CTA principal (Tally) -->
+                <div class="btn-row">
+                    <button class="btn btn-primary btn-large" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Entrar na comunidade no WhatsApp">
+                        <span class="btn-text">Entrar na Comunidade (Grátis)</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    <a href="conteudo.html" class="btn btn-secondary btn-large" aria-label="Explorar conteúdo gratuito">Explorar Conteúdo</a>
+                    <a href="templates.html" class="btn btn-secondary btn-large" aria-label="Ver templates prontos">Ver Templates</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Métricas (Prova Social) -->
+    <section class="metrics-strip">
+        <div class="container metrics-grid">
+            <div class="metric-item">
+                <div class="metric-number" data-key="membros" data-value="200" data-prefix="+" data-duration="1200">+200</div>
+                <div class="metric-label" data-label="Membros ativos">Membros ativos</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-number" data-key="trilhas" data-value="3" data-duration="900">3</div>
+                <div class="metric-label" data-label="Trilhas">Trilhas</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-number" data-key="aulasComVideo" data-value="6" data-duration="900">6</div>
+                <div class="metric-label" data-label="Aulas com vídeos">Aulas com vídeos</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-number" data-key="materiais" data-value="25" data-duration="900">25</div>
+                <div class="metric-label" data-label="Arquivos/templates">Arquivos/templates</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Comece por aqui (segmentação por objetivo) -->
+    <section class="sobre">
+        <div class="container">
+            <div class="section-header">
+                <h2>Comece por aqui</h2>
+                <p>Escolha seu objetivo e siga o caminho indicado</p>
+            </div>
+            <div class="features-grid grid-2">
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="layers" aria-hidden="true"></i></div>
+                    <h3>Novo projeto com Templates</h3>
+                    <p>Use modelos prontos de prompts, agentes e automações para criar sua solução mais rápido.</p>
+                    <div class="mt-4">
+                      <a class="btn btn-primary" href="templates.html">Abrir Biblioteca de Templates</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="target" aria-hidden="true"></i></div>
+                    <h3>Otimizar meu negócio atual</h3>
+                    <p>Aplique IA em tarefas-chave: atendimento, marketing, operações e relatórios com trilhas guiadas.</p>
+                    <div class="mt-4">
+                      <a class="btn btn-primary" href="conteudo.html">Ver trilhas recomendadas</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="brain" aria-hidden="true"></i></div>
+                    <h3>Aprender e se atualizar</h3>
+                    <p>Trilha Fundamentos para construir base sólida e acompanhar novidades sem ruído.</p>
+                    <div class="mt-4">
+                      <a class="btn btn-primary" href="curso.html?trilha=fundamentos-ia">Começar por Fundamentos</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="handshake" aria-hidden="true"></i></div>
+                    <h3>Networking e parcerias</h3>
+                    <p>Entre no grupo, conecte-se com empreendedores e encontre parceiros para tirar ideias do papel.</p>
+                    <div class="mt-4">
+                      <button class="btn btn-primary" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave">Entrar no Grupo (Grátis)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Sobre a Comunidade -->
+    <section id="sobre" class="sobre">
+        <div class="container">
+            <div class="section-header">
+                <h2>Por que a IAxplor?</h2>
+                <p>Comunidade prática para empreendedores: menos teoria, mais implementação.</p>
+            </div>
+            
+                <div class="features-grid grid-2">
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="target" aria-hidden="true"></i></div>
+                    <h3>Resultados em semanas</h3>
+                    <p>Passo a passo enxuto para tirar projetos do papel e medir impacto rapidamente.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="handshake" aria-hidden="true"></i></div>
+                    <h3>Networking que ajuda</h3>
+                    <p>Troque experiências, peça ajuda e encontre parceiros para acelerar sua execução.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="book" aria-hidden="true"></i></div>
+                    <h3>Conteúdo que não enrola</h3>
+                    <p>Trilhas objetivas, vídeos curtos e templates prontos para usar no seu negócio.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="lightbulb" aria-hidden="true"></i></div>
+                    <h3>Suporte real</h3>
+                    <p>Dúvidas respondidas no grupo. Sem ficar travado — avance todos os dias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Perguntas Frequentes</h2>
+                <p>Tire suas dúvidas antes de entrar na comunidade</p>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>O acesso ao grupo no WhatsApp é gratuito?</summary>
+                    <div>Sim. Basta preencher o formulário e você vai receber o link de acesso.</div>
+                </details>
+                <details class="faq-item">
+                    <summary>Como funcionam as trilhas?</summary>
+                    <div>As trilhas são divididas em módulos e aulas, com vídeos e materiais práticos para download.</div>
+                </details>
+                <details class="faq-item">
+                    <summary>Posso divulgar meus projetos?</summary>
+                    <div>Sim, a comunidade incentiva networking e colaborações. Respeite as regras do grupo.</div>
+                </details>
+                <details class="faq-item">
+                    <summary>Qual o nível necessário?</summary>
+                    <div>Temos caminhos para iniciantes e avançados. Comece por Fundamentos se estiver iniciando.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+        <!-- Como funciona -->
+        <section class="sobre with-neural">
+            <div class="hero-bg-elements" aria-hidden="true"><canvas class="neural-canvas"></canvas></div>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Como funciona</h2>
+                    <p>Entre no grupo, siga as trilhas e implemente IA no seu negócio</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i data-lucide="check-circle" aria-hidden="true"></i></div>
+                    <h3>1. Entre na Comunidade</h3>
+                    <p>Leva 1 minuto. Você recebe o link do grupo e já começa a participar.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i data-lucide="book" aria-hidden="true"></i></div>
+                    <h3>2. Siga as Trilhas</h3>
+                    <p>Escolha seu nível e siga planos curtos com vídeos e templates prontos.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i data-lucide="rocket" aria-hidden="true"></i></div>
+                    <h3>3. Implemente IA</h3>
+                    <p>Teste em pequena escala, meça resultado e replique. Compartilhe vitórias.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Preview do Conteúdo -->
+    <section id="conteudo" class="conteudo" aria-labelledby="content-title">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="content-title">Central de Conteúdo Gratuito</h2>
+                <p>Trilhas práticas com vídeos objetivos e templates para aplicar hoje no seu negócio.</p>
+            </div>
+            
+            <div class="trilhas-grid">
+                <div class="trilha-card">
+                    <span class="level-badge">Básico</span>
+                    <div class="trilha-header">
+                        <h3>Fundamentos de IA</h3>
+                    </div>
+                    <p>Comece do zero: entenda conceitos essenciais e os primeiros passos para usar IA com segurança.</p>
+                    <div class="btn-inline-row">
+                    <a class="btn btn-secondary" href="curso.html?trilha=fundamentos-ia" aria-label="Ver trilha Fundamentos de IA">Ver trilha</a>
+                    </div>
+                    <ul class="trilha-topics">
+                        <li>O que é IA e como funciona</li>
+                        <li>Tipos de IA para negócios</li>
+                        <li>Primeiros projetos práticos</li>
+                    </ul>
+                </div>
+                
+                <div class="trilha-card">
+                    <span class="level-badge">Intermediário</span>
+                    <div class="trilha-header">
+                        <h3>Agentes de IA</h3>
+                    </div>
+                    <p>Construa agentes conversacionais e fluxos de automação conectados ao seu negócio.</p>
+                    <div class="btn-inline-row">
+                    <a class="btn btn-secondary" href="curso.html?trilha=agentes-ia" aria-label="Ver trilha Agentes de IA">Ver trilha</a>
+                    </div>
+                    <ul class="trilha-topics">
+                        <li>Criação de agentes conversacionais</li>
+                        <li>Automação de processos</li>
+                        <li>Integração com sistemas</li>
+                    </ul>
+                </div>
+                
+                <div class="trilha-card">
+                    <span class="level-badge">Avançado</span>
+                    <div class="trilha-header">
+                        <h3>Automações Avançadas</h3>
+                    </div>
+                    <p>Modele e escale pipelines de automação com integrações e monitoramento.</p>
+                    <div class="btn-inline-row">
+                    <a class="btn btn-secondary" href="curso.html?trilha=automacoes-avancadas" aria-label="Ver trilha Automações Avançadas">Ver trilha</a>
+                    </div>
+                    <ul class="trilha-topics">
+                        <li>Workflows automatizados</li>
+                        <li>Integração entre ferramentas</li>
+                        <li>Monitoramento e otimização</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h3>Quer ver tudo?</h3>
+                <p>Acesse a Central completa com todas as trilhas, aulas e materiais.</p>
+                <div class="btn-row btn-row--md">
+                  <a href="conteudo.html" class="btn btn-primary">Explorar todas as trilhas</a>
+                  <button class="btn btn-secondary" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave">Entrar na Comunidade (Grátis)</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section class="depoimentos">
+        <div class="container">
+            <div class="section-header">
+                <h2>O que dizem nossos membros</h2>
+            </div>
+            
+            <div class="depoimentos-grid">
+                <div class="depoimento-card">
+                    <p>"A IAxplor me ajudou a implementar minha primeira automação. A comunidade é incrível!"</p>
+                    <div class="depoimento-author">
+                        <strong>Maria Silva</strong>
+                        <span>CEO, TechStart</span>
+                    </div>
+                </div>
+                
+                <div class="depoimento-card">
+                    <p>"Conteúdo de qualidade e networking valioso. Recomendo para qualquer empreendedor."</p>
+                    <div class="depoimento-author">
+                        <strong>João Santos</strong>
+                        <span>Fundador, InovaçãoLab</span>
+                    </div>
+                </div>
+                
+                <div class="depoimento-card">
+                    <p>"Os templates e arquivos disponíveis economizaram horas do meu tempo de desenvolvimento."</p>
+                    <div class="depoimento-author">
+                        <strong>Ana Costa</strong>
+                        <span>CTO, DigitalSolutions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-final">
+        <div class="container">
+            <h2>Pronto para transformar seu negócio?</h2>
+            <p>Junte-se a centenas de empreendedores que já estão usando IA para crescer</p>
+            <a href="#home" class="btn btn-primary btn-large">Entrar na Comunidade IAxplor</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IAxplor</h3>
+                    <p>Comunidade de IA para empreendedores e profissionais</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#conteudo">Conteúdo</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                        <li><a href="/termos.html" rel="noopener">Termos de Uso</a></li>
+                        <li><a href="/privacidade.html" rel="noopener">Privacidade</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>bruno@iaxplor.com</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">YouTube</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 IAxplor. Todos os direitos reservados.</p>
+                <div class="mt-3">
+                  <button class="btn btn-secondary" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Travou? Peça ajuda na comunidade">Travou? Peça ajuda na comunidade</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- CTA flutuante: entrar no WhatsApp (Tally) -->
+    <div class="floating-cta">
+        <button class="btn btn-primary btn-large" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Entrar na comunidade no WhatsApp">Entrar na Comunidade no WhatsApp</button>
     </div>
+
+    <!-- Tally embed -->
+    <script>
+      (function(){
+        var d=document,s=d.createElement('script');
+        s.src='https://tally.so/widgets/embed.js';
+        s.async=true;
+        s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&rs!='complete'&&rs!='loaded')return; if(typeof Tally!=='undefined') Tally.loadEmbeds();};
+        d.body.appendChild(s);
+      })();
+    </script>
+    <script type="module" src="/assets/js/main.js"></script>
 </body>
 </html>

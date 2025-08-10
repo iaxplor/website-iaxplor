@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Templates de IA e Automação • IAxplor</title>
+  <meta name="description" content="Baixe templates de IA e automação direto no site para iniciar seu projeto mais rápido." />
+  <meta name="theme-color" content="#6741d9" />
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="https://unpkg.com/lucide@0.539.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/css/content.css" />
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="IAxplor Home"><img src="assets/img/logo.svg" alt="IAxplor" class="logo-img"></a>
+        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-menu" role="navigation" aria-label="Principal">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#sobre">Sobre</a></li>
+          <li><a href="conteudo.html">Conteúdo</a></li>
+          <li><a href="templates.html" aria-current="page">Templates</a></li>
+          <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="tpl-wrapper">
+    <section class="templates-hero">
+      <div class="container" style="position:relative; z-index:1;">
+        <div class="section-header">
+          <h2>Templates prontos para usar</h2>
+          <p>Baixe modelos de prompts, agentes e automações direto do site e inicie seu projeto hoje.</p>
+        </div>
+      </div>
+      <div class="hero-bg-elements" aria-hidden="true">
+        <canvas class="neural-canvas"></canvas>
+      </div>
+    </section>
+    <section class="tpl-search-section">
+      <div class="container">
+        <div class="content-search" role="search">
+          <input id="tpl-search" type="search" placeholder="Buscar por nome da aula, trilha ou template..." aria-label="Buscar templates" />
+        </div>
+        <section id="tpl-grid" class="trilhas-grid" aria-live="polite"></section>
+      </div>
+    </section>
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Perguntas rápidas</h2>
+          <p>Como usar os templates com mais eficiência</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Todos os arquivos são templates?</summary>
+            <div>Não. Exibimos aqui apenas materiais marcados como template. Slides e artefatos de apoio ficam nas aulas.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Posso editar e reutilizar?</summary>
+            <div>Sim. Os templates são feitos para serem adaptados ao seu negócio. Cite a fonte quando fizer sentido.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Como começo mais rápido?</summary>
+            <div>Baixe um template, siga a trilha indicada na Central e peça ajuda no grupo se travar.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>IAxplor</h3>
+          <p>Comunidade de IA para empreendedores e profissionais</p>
+        </div>
+        <div class="footer-section">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#sobre">Sobre</a></li>
+            <li><a href="conteudo.html">Conteúdo</a></li>
+            <li><a href="templates.html" aria-current="page">Templates</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+            <li><a href="/termos.html" rel="noopener">Termos de Uso</a></li>
+            <li><a href="/privacidade.html" rel="noopener">Privacidade</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contato</h4>
+          <p>bruno@iaxplor.com</p>
+          <div class="social-links">
+            <a href="#" class="social-link">YouTube</a>
+            <a href="#" class="social-link">LinkedIn</a>
+            <a href="#" class="social-link">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 IAxplor. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CTA flutuante: ajuda na comunidade (Tally) -->
+  <div class="floating-cta">
+    <button class="btn btn-primary btn-large" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Travou? Peça ajuda na comunidade">Travou? Peça Ajuda na Comunidade</button>
+  </div>
+
+  <script type="module" src="/assets/js/main.js"></script>
+  <script>
+    (async function(){
+      const res = await fetch('/data/trilhas.json');
+      const trilhas = await res.json();
+      const grid = document.getElementById('tpl-grid');
+      let items = [];
+      (trilhas||[]).forEach(t => (t.modulos||[]).forEach(m => (m.aulas||[]).forEach(a => {
+        (a.materiais||[]).filter(x => x.isTemplate).forEach(mat => {
+          items.push({ trilha: t.titulo, aula: a.titulo, label: mat.label, url: mat.url, featured: !!mat.featured });
+        });
+      })));
+
+      function render(list) {
+        grid.innerHTML = '';
+        if (!list.length) { grid.innerHTML = '<p style="color:var(--text-secondary)">Nenhum template encontrado.</p>'; return; }
+        list.forEach((it) => {
+          const card = document.createElement('div');
+          card.className = 'template-card';
+          const head = document.createElement('div');
+          head.className = 'template-card__head';
+          head.innerHTML = `<h3 class="template-card__title">${it.label}</h3><span class="template-badge">${it.featured ? 'Destaque' : 'Template'}</span>`;
+          const p = document.createElement('p');
+          p.className = 'template-card__meta';
+          p.textContent = `${it.trilha} • ${it.aula}`;
+          const actions = document.createElement('div');
+          actions.className = 'template-card__actions';
+          const dl = document.createElement('a');
+          dl.className = 'btn btn-primary download-direct';
+          dl.setAttribute('data-url', it.url);
+          dl.setAttribute('data-filename', (it.label||'arquivo').replace(/\s+/g,'_'));
+          dl.href = '#';
+          dl.textContent = 'Baixar';
+          actions.appendChild(dl);
+          card.appendChild(head); card.appendChild(p); card.appendChild(actions);
+          grid.appendChild(card);
+        });
+      }
+
+      // Ordena destacando featured primeiro
+      items.sort((a,b) => Number(b.featured) - Number(a.featured));
+      render(items);
+
+      const input = document.getElementById('tpl-search');
+      input && input.addEventListener('input', () => {
+        const q = input.value.toLowerCase().trim();
+        const filtered = items.filter(it =>
+          !q || it.label.toLowerCase().includes(q) || it.trilha.toLowerCase().includes(q) || it.aula.toLowerCase().includes(q)
+        );
+        render(filtered);
+      });
+    })();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.lucide && lucide.createIcons) {
+        lucide.createIcons({ attrs: { stroke: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#6741d9', 'stroke-width': 1.5 } });
+      }
+    });
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curso • IAxplor</title>
+  <meta name="description" content="Assista às aulas e implemente IA com materiais práticos da trilha selecionada." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#6741d9" />
+  <link rel="canonical" href="https://iaxplor.com/curso.html" />
+  <meta name="content-language" content="pt-BR" />
+  <script defer src="https://unpkg.com/lucide@0.539.0/dist/umd/lucide.min.js"></script>
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/img/favicon.ico" sizes="any" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Curso - IAxplor" />
+  <meta property="og:description" content="Assista às aulas e acompanhe o programa da trilha selecionada." />
+  <meta property="og:url" content="https://iaxplor.com/curso.html" />
+  <meta property="og:image" content="https://iaxplor.com/assets/img/og-content.svg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Curso - IAxplor" />
+  <meta name="twitter:description" content="Assista às aulas e acompanhe o programa da trilha selecionada." />
+  <meta name="twitter:image" content="https://iaxplor.com/assets/img/og-content.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="assets/css/content.css" />
+  <style>
+    .course-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
+    .course-player { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-md); overflow: hidden; }
+    .course-frame { position: relative; width: 100%; padding-top: 56.25%; background:#000; }
+    .course-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; background:#000; }
+    .player-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color: var(--text-secondary); background:#000; }
+    .course-info { padding: 1rem; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .course-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: .5rem; }
+    .course-desc { color: var(--text-secondary); }
+    .complete-btn { margin-left: auto; padding: .5rem .75rem; border-radius: 10px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.04); color: var(--text-primary); cursor: pointer; }
+    .complete-btn[disabled] { opacity: .45; cursor: default; }
+    .course-nav { margin-left: auto; display: flex; gap: .5rem; }
+    .nav-btn { padding: .5rem .75rem; border-radius: 10px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.04); color: var(--text-primary); cursor: pointer; }
+    .nav-btn[disabled] { opacity: .45; cursor: default; }
+    .course-sidebar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-md); overflow: hidden; }
+    .course-sidebar h3 { margin: 1rem; }
+    .trail-switch { display:flex; gap:.5rem; align-items:center; margin: 0 1rem .5rem; }
+    .trail-switch select { flex:1; padding:.5rem .6rem; border-radius:10px; border:1px solid var(--border-color); background: rgba(255,255,255,0.04); color: var(--text-primary); }
+    .trail-switch a { color: var(--primary-color); text-decoration: none; font-size:.9rem; }
+    .course-list { max-height: calc(100vh - 220px); overflow: auto; padding: .5rem 1rem 1rem; }
+    .module-header { display: flex; justify-content: space-between; align-items: center; padding: .5rem 0; cursor: pointer; color: var(--text-secondary); font-weight: 600; background: transparent; border: 0; width: 100%; text-align: left; }
+    .module-header:hover { color: var(--text-primary); }
+    .module-list { display: grid; gap: .5rem; margin-bottom: .75rem; }
+    .course-item { padding: .75rem; border-radius: 10px; border: 1px solid transparent; display: grid; grid-template-columns: 48px 1fr auto; gap: .75rem; align-items: center; cursor: pointer; }
+    .course-item:hover { background: rgba(255,255,255,0.04); border-color: var(--border-color); }
+    .course-item.active { border-color: var(--primary-color); background: rgba(103,65,217,0.08); }
+    .course-thumb { width: 48px; height: 48px; background: var(--bg-secondary); border-radius: 6px; overflow: hidden; }
+    .course-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .badge-mini { display: inline-block; padding: .15rem .45rem; border-radius: 8px; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: .75rem; }
+    .course-progress { color: var(--text-secondary); font-size: .75rem; border: 1px solid var(--border-color); padding: .15rem .4rem; border-radius: 8px; }
+    .overall-progress { margin-left: auto; border: 1px solid var(--border-color); padding: .3rem .5rem; border-radius: 8px; color: var(--text-secondary); }
+    .status-icon { margin-right: .4rem; opacity: .9; }
+    @media (max-width: 980px) { .course-layout { grid-template-columns: 1fr; } .course-sidebar { order: -1; } }
+  </style>
+</head>
+<body>
+  <a href="#course-title" class="skip-link">Pular para conteúdo</a>
+  <header class="header">
+    <nav class="nav">
+      <div class="nav-container">
+         <a href="index.html#home" class="logo" aria-label="IAxplor Home"><img src="assets/img/logo.svg" alt="IAxplor" class="logo-img"></a>
+        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+         <ul class="nav-menu" role="navigation" aria-label="Principal">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#sobre">Sobre</a></li>
+          <li><a href="conteudo.html">Conteúdo</a></li>
+          <li><a href="templates.html">Templates</a></li>
+          <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container course-wrapper">
+    <div id="course-title" class="section-header course-title"></div>
+    <div class="course-layout">
+      <section class="course-player">
+        <div id="player" class="course-frame"></div>
+        <div class="course-info">
+          <div id="lesson-title" class="course-title"></div>
+          <span id="overall" class="overall-progress">0%</span>
+          <div class="course-nav">
+            <button id="prevLesson" class="nav-btn">← Aula anterior</button>
+            <button id="nextLesson" class="nav-btn">Próxima aula →</button>
+            <button id="nextTrail" class="nav-btn">Próxima trilha →</button>
+          </div>
+          <button id="completeBtn" class="complete-btn">Marcar como concluída</button>
+        </div>
+       <div id="materials" class="download-section course-materials" style="display:none;"></div>
+      </section>
+      <aside class="course-sidebar">
+        <h3 id="sidebar-title">Aulas</h3>
+        <div class="trail-switch">
+          <select id="trailSelect" aria-label="Selecionar trilha"></select>
+          <a href="conteudo.html" title="Ver todas as trilhas">Ver todas</a>
+        </div>
+        <div id="course-list" class="course-list"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>IAxplor</h3>
+          <p>Comunidade de IA para empreendedores e profissionais</p>
+        </div>
+        <div class="footer-section">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="conteudo.html">Conteúdo</a></li>
+            <li><a href="/termos.html" rel="noopener">Termos de Uso</a></li>
+            <li><a href="/privacidade.html" rel="noopener">Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 IAxplor. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (async function() {
+      const params = new URLSearchParams(location.search);
+      const slug = params.get('trilha');
+      const res = await fetch('/data/trilhas.json');
+      const trilhas = await res.json();
+      const trilha = trilhas.find(t => t.slug === slug) || trilhas[0];
+      if (!trilha) return;
+
+      document.getElementById('course-title').innerHTML = `<h2>${trilha.titulo}</h2><p class="course-desc">Use os materiais e siga as aulas curtas para aplicar no seu projeto.</p>`;
+      document.getElementById('sidebar-title').textContent = `${trilha.titulo}`;
+      // preenche seletor de trilhas
+      const trailSelect = document.getElementById('trailSelect');
+      if (trailSelect) {
+        trailSelect.innerHTML = trilhas.map(t => `<option value="${t.slug}">${t.titulo}</option>`).join('');
+        trailSelect.value = trilha.slug;
+        trailSelect.addEventListener('change', () => {
+          const slugSel = trailSelect.value;
+          window.location.assign(`curso.html?trilha=${encodeURIComponent(slugSel)}`);
+        });
+      }
+
+      const list = document.getElementById('course-list');
+      const flatAulas = [];
+      const LS_LAST_KEY = (slug) => `last:${slug}`;
+      const aulaId = (a) => a.youtubeId || a.id || a.titulo.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      let firstVideoId = null;
+      (trilha.modulos || []).forEach((mod, mi) => {
+        const header = document.createElement('button');
+        header.type = 'button';
+        header.className = 'module-header';
+        const contentId = `mod-${mi+1}`;
+        header.setAttribute('aria-expanded', 'false');
+        header.setAttribute('aria-controls', contentId);
+        header.innerHTML = `<span>${mod.titulo}</span><span class="badge-mini">${(mod.aulas||[]).length} aula(s)</span>`;
+        const container = document.createElement('div');
+        container.className = 'module-list';
+        container.id = contentId;
+        container.hidden = true;
+        list.appendChild(header);
+        list.appendChild(container);
+        header.addEventListener('click', () => {
+          const expanded = header.getAttribute('aria-expanded') === 'true';
+          header.setAttribute('aria-expanded', String(!expanded));
+          container.hidden = expanded;
+        });
+        (mod.aulas || []).forEach((aula, ai) => {
+          const item = document.createElement('div');
+          item.className = 'course-item';
+          const videoId = aula.youtubeId;
+          if (!firstVideoId && videoId) firstVideoId = videoId;
+          const thumb = document.createElement('div');
+          thumb.className = 'course-thumb';
+          if (videoId) {
+            const img = document.createElement('img');
+            img.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+            img.alt = aula.titulo; img.loading = 'lazy';
+            thumb.appendChild(img);
+          }
+          const text = document.createElement('div');
+          text.innerHTML = `<div><span class=\"status-icon\"></span>${aula.titulo} ${!videoId ? '<span class=\"badge-mini\">Em breve</span>' : ''}</div><div class=\"trilha-card-meta\">${aula.duracao || ''}</div>`;
+          const prog = document.createElement('span');
+          prog.className = 'course-progress';
+          prog.textContent = '0%';
+          item.appendChild(thumb); item.appendChild(text); item.appendChild(prog);
+          // index e registro
+          const idx = flatAulas.length;
+          item.dataset.idx = String(idx);
+          item.addEventListener('click', () => load(videoId, aula, item));
+          container.appendChild(item);
+          flatAulas.push({ aula, videoId, itemEl: item, id: aulaId(aula) });
+        });
+      });
+
+      let currentIndex = -1;
+      // Navegação (declarar antes do primeiro load para evitar TDZ)
+      const prevBtn = document.getElementById('prevLesson');
+      const nextBtn = document.getElementById('nextLesson');
+      const nextTrailBtn = document.getElementById('nextTrail');
+      function updateNavButtons() {
+        prevBtn.disabled = currentIndex <= 0;
+        nextBtn.disabled = currentIndex < 0 || currentIndex >= flatAulas.length - 1;
+        const trilhaIdx = trilhas.findIndex(t => t.slug === trilha.slug);
+        nextTrailBtn.disabled = trilhaIdx < 0 || trilhaIdx >= trilhas.length - 1;
+      }
+      function findIndexForAula(aula, videoId, itemEl) {
+        if (itemEl && itemEl.dataset && itemEl.dataset.idx) {
+          const n = parseInt(itemEl.dataset.idx, 10);
+          if (!Number.isNaN(n)) return n;
+        }
+        const id = aulaId(aula);
+        if (id) {
+          const byId = flatAulas.findIndex(x => x.id === id);
+          if (byId !== -1) return byId;
+        }
+        return flatAulas.findIndex(x => x.aula.titulo === aula.titulo);
+      }
+      function loadByIndex(i) {
+        if (i < 0 || i >= flatAulas.length) return;
+        const rec = flatAulas[i];
+        load(rec.videoId, rec.aula, rec.itemEl);
+      }
+      function removeIfExists(selector) {
+        const el = document.querySelector(selector);
+        if (el) el.remove();
+      }
+
+      function injectCourseJsonLd(trilha) {
+        removeIfExists('script#course-jsonld');
+        const data = {
+          '@context': 'https://schema.org',
+          '@type': 'Course',
+          name: trilha.titulo,
+          description: trilha.descricao || trilha.titulo,
+          provider: { '@type': 'Organization', name: 'IAxplor', url: 'https://iaxplor.com/' }
+        };
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.id = 'course-jsonld';
+        s.textContent = JSON.stringify(data);
+        document.head.appendChild(s);
+      }
+
+      function injectVideoJsonLd(videoId, aula) {
+        removeIfExists('script#video-jsonld');
+        if (!videoId) return;
+        const data = {
+          '@context': 'https://schema.org',
+          '@type': 'VideoObject',
+          name: aula.titulo,
+          description: aula.titulo,
+          thumbnailUrl: [`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`],
+          uploadDate: new Date().toISOString(),
+          contentUrl: `https://www.youtube.com/watch?v=${videoId}`,
+          embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}`
+        };
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.id = 'video-jsonld';
+        s.textContent = JSON.stringify(data);
+        document.head.appendChild(s);
+      }
+
+      function syncMetaForTrilha(trilha) {
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.setAttribute('href', `https://iaxplor.com/curso.html?trilha=${encodeURIComponent(trilha.slug)}`);
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute('content', `https://iaxplor.com/curso.html?trilha=${encodeURIComponent(trilha.slug)}`);
+        const titleText = `${trilha.titulo} • IAxplor`;
+        document.title = titleText;
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', titleText);
+        const twTitle = document.querySelector('meta[name="twitter:title"]');
+        if (twTitle) twTitle.setAttribute('content', titleText);
+        const desc = trilha.descricao || 'Assista às aulas e acompanhe o programa da trilha selecionada.';
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', desc);
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute('content', desc);
+        const twDesc = document.querySelector('meta[name="twitter:description"]');
+        if (twDesc) twDesc.setAttribute('content', desc);
+      }
+
+      function load(videoId, aula, itemEl) {
+        const player = document.getElementById('player');
+        player.innerHTML = '';
+        if (videoId) {
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+          iframe.title = aula.titulo;
+          iframe.frameBorder = '0';
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          iframe.allowFullscreen = true;
+          iframe.loading = 'lazy';
+          player.appendChild(iframe);
+          // Acessibilidade: foco inicial no player ao trocar de aula
+          setTimeout(() => {
+            try { iframe.focus(); } catch(_) {}
+          }, 0);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'player-placeholder';
+          ph.textContent = 'Em breve';
+          ph.setAttribute('role','img');
+          ph.setAttribute('aria-label','Conteúdo em breve');
+          player.appendChild(ph);
+        }
+        document.getElementById('lesson-title').textContent = aula.titulo;
+        const completeBtn = document.getElementById('completeBtn');
+        completeBtn.disabled = !videoId;
+        completeBtn.onclick = () => markComplete(aula, itemEl);
+        injectVideoJsonLd(videoId, aula);
+
+        // materiais
+        const mat = document.getElementById('materials');
+        mat.innerHTML = '';
+        if (Array.isArray(aula.materiais) && aula.materiais.length) {
+          mat.style.display = '';
+          mat.innerHTML = '<h4>📁 Materiais da Aula</h4>';
+           const list = document.createElement('div');
+          list.className = 'download-list';
+          aula.materiais.forEach((m) => {
+            const a = document.createElement('a');
+            a.className = 'download-item github';
+            a.href = '#';
+            a.setAttribute('role','button');
+            a.dataset.url = m.url;
+            a.dataset.filename = (m.label || 'arquivo').replace(/\s+/g,'_') + guessExt(m.url);
+            a.innerHTML = `<i data-lucide="download" class="icon-inline" aria-hidden="true"></i>${m.label}`;
+            a.addEventListener('click', async (e) => {
+              e.preventDefault();
+              a.setAttribute('aria-busy','true');
+              a.innerHTML = '<i data-lucide="loader-2" class="icon-inline" aria-hidden="true"></i>Baixando…';
+              try {
+                const ok = await downloadFromRemote(a.dataset.url, a.dataset.filename);
+                if (!ok) window.open(a.dataset.url, '_blank', 'noopener');
+              } catch(_) { window.open(a.dataset.url, '_blank', 'noopener'); }
+              finally { a.removeAttribute('aria-busy'); a.innerHTML = `<i data-lucide=\"download\" class=\"icon-inline\" aria-hidden=\"true\"></i>${m.label}`; if (window.lucide) lucide.createIcons(); }
+            });
+            list.appendChild(a);
+          });
+          mat.appendChild(list);
+        } else {
+          mat.style.display = 'none';
+        }
+
+        // marca item ativo
+        document.querySelectorAll('.course-item').forEach(el => el.classList.remove('active'));
+        // tentativa simples de localizar pelo título
+        const found = itemEl || Array.from(document.querySelectorAll('.course-item')).find(el => el.textContent.includes(aula.titulo));
+        if (found) found.classList.add('active');
+        currentIndex = findIndexForAula(aula, videoId, itemEl);
+        // persiste última aula
+        localStorage.setItem(LS_LAST_KEY(trilha.slug), aulaId(aula));
+        updateNavButtons();
+      }
+
+      // carrega última aula vista, senão primeira com vídeo, senão a primeira
+      // Metadados dinâmicos por trilha
+      syncMetaForTrilha(trilha);
+      injectCourseJsonLd(trilha);
+
+      const lastId = localStorage.getItem(LS_LAST_KEY(trilha.slug));
+      if (lastId) {
+        const idx = flatAulas.findIndex(x => x.id === lastId);
+        if (idx !== -1) loadByIndex(idx);
+        else {
+          const firstAula = (trilha.modulos||[]).flatMap(m=>m.aulas||[]).find(a=>a.youtubeId);
+          if (firstAula) load(firstAula.youtubeId, firstAula);
+          else if (flatAulas.length > 0) loadByIndex(0);
+        }
+      } else {
+        const firstAula = (trilha.modulos||[]).flatMap(m=>m.aulas||[]).find(a=>a.youtubeId);
+        if (firstAula) load(firstAula.youtubeId, firstAula);
+        else if (flatAulas.length > 0) loadByIndex(0);
+      }
+
+      // Progresso simples com localStorage
+      function key(aula) { return `progress:${trilha.slug}:${aula.id || aula.titulo}`; }
+      function markComplete(aula, itemEl) {
+        if (!aula) return;
+        localStorage.setItem(key(aula), '100');
+        updateProgressUI();
+        if (itemEl) itemEl.querySelector('.course-progress').textContent = '100%';
+      }
+      function getAllAulas() { return (trilha.modulos||[]).flatMap(m=>m.aulas||[]); }
+      function updateProgressUI() {
+        const aulas = getAllAulas();
+        let done = 0;
+        aulas.forEach((a) => { if (localStorage.getItem(key(a)) === '100') done++; });
+        const overall = aulas.length ? Math.round((done / aulas.length) * 100) : 0;
+        document.getElementById('overall').textContent = `${overall}%`;
+        // Atualiza por correspondência do id estável ao invés do índice visual
+        document.querySelectorAll('.course-item').forEach((el) => {
+          const idxStr = el.dataset.idx;
+          const idx = typeof idxStr === 'string' ? parseInt(idxStr, 10) : NaN;
+          const rec = Number.isNaN(idx) ? null : flatAulas[idx];
+          const aula = rec ? rec.aula : null;
+          if (!aula) return;
+          const p = localStorage.getItem(key(aula)) || '0';
+          const badge = el.querySelector('.course-progress');
+          if (badge) badge.textContent = `${p}%`;
+          const icon = el.querySelector('.status-icon');
+          if (icon) {
+            icon.textContent = p === '100' ? '✅' : (p !== '0' ? '🕒' : '⭘');
+          }
+        });
+      }
+      updateProgressUI();
+
+      // atalhos de teclado ← → para navegar
+      document.addEventListener('keydown', (e) => {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+        if (e.key === 'ArrowLeft') {
+          if (currentIndex > 0) loadByIndex(currentIndex - 1);
+        } else if (e.key === 'ArrowRight') {
+          if (currentIndex < flatAulas.length - 1) loadByIndex(currentIndex + 1);
+        }
+      });
+
+      // Acessibilidade: rolagem suave para o player ao trocar de aula
+      const scrollToPlayer = () => {
+        const headerEl = document.querySelector('.header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 0;
+        const y = document.getElementById('player').getBoundingClientRect().top + window.scrollY - headerHeight - 12;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      };
+      const origLoadByIndex = loadByIndex;
+      loadByIndex = function(i){ origLoadByIndex(i); scrollToPlayer(); };
+
+      // Navegação (listeners)
+      prevBtn.addEventListener('click', () => { if (currentIndex > 0) { loadByIndex(currentIndex - 1); } else { console.warn('Sem aula anterior'); } });
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < flatAulas.length - 1) {
+          // opção: conclusão automática ao avançar
+          const rec = flatAulas[currentIndex];
+          if (rec && rec.aula) {
+            localStorage.setItem(key(rec.aula), '100');
+          }
+          loadByIndex(currentIndex + 1);
+          updateProgressUI();
+        } else { console.warn('Sem próxima aula'); }
+      });
+      nextTrailBtn.addEventListener('click', () => {
+        try {
+          const trilhaIdx = trilhas.findIndex(t => t.slug === trilha.slug);
+          if (trilhaIdx >= 0 && trilhaIdx < trilhas.length - 1) {
+            const prox = trilhas[trilhaIdx + 1];
+            window.location.assign(`curso.html?trilha=${encodeURIComponent(prox.slug)}`);
+          }
+        } catch (e) { console.error('nextTrail error', e); }
+      });
+      function guessExt(url){ try { const u = new URL(url); const p = u.pathname; const m = p.match(/\.([a-z0-9]+)$/i); return m?('.'+m[1].toLowerCase()):''; } catch(_) { return ''; } }
+      async function downloadFromRemote(url, filename){
+        try {
+          const res = await fetch(url, { mode: 'cors' });
+          if (!res.ok) return false;
+          const blob = await res.blob();
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename || 'download';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(()=>URL.revokeObjectURL(link.href), 2000);
+          return true;
+        } catch(e) { return false; }
+      }
+    })();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.lucide && lucide.createIcons) {
+        lucide.createIcons({ attrs: { stroke: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#6741d9', 'stroke-width': 1.5 } });
+      }
+    });
+  </script>
+  <!-- CTA flutuante: ajuda na comunidade (Tally) -->
+  <div class="floating-cta">
+    <button class="btn btn-primary btn-large" data-tally-open="w4zWxY" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" aria-label="Travou? Peça ajuda na comunidade"><i data-lucide="messages-square" class="icon-inline" aria-hidden="true"></i>Travou? Peça Ajuda na Comunidade</button>
+  </div>
+  <!-- Tally embed -->
+  <script>
+    (function(){
+      var d=document,s=d.createElement('script');
+      s.src='https://tally.so/widgets/embed.js';
+      s.async=true;
+      s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&rs!='complete'&&rs!='loaded')return; if(typeof Tally!=='undefined') Tally.loadEmbeds();};
+      d.body.appendChild(s);
+    })();
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,84 @@
+[
+  {
+    "slug": "fundamentos-ia",
+    "titulo": "Fundamentos de IA",
+    "nivel": "Básico",
+    "cover": "/assets/img/covers/fundamentos.svg",
+    "descricao": "Conceitos essenciais e primeiros passos para implementar IA no seu negócio.",
+    "modulos": [
+      {
+        "titulo": "Introdução à Inteligência Artificial",
+        "aulas": [
+          {
+            "titulo": "O que é IA e como funciona",
+            "id": "o-que-e-ia-e-como-funciona",
+            "youtubeId": "nQbsFjfeYk0",
+            "duracao": "15:30",
+            "materiais": [
+              { "label": "Slides da apresentação", "url": "https://github.com/iaxplor/templates/blob/main/fundamentos/slides.pdf", "isTemplate": false },
+              { "label": "Checklist de conceitos", "url": "https://github.com/iaxplor/templates/blob/main/fundamentos/checklist.md", "isTemplate": true, "featured": true },
+              { "label": "Exercícios práticos", "url": "https://github.com/iaxplor/templates/blob/main/fundamentos/exercicios.md", "isTemplate": false }
+            ]
+          }
+        ]
+      },
+      {
+        "titulo": "Tipos de IA para Negócios",
+        "aulas": [
+          { "titulo": "Machine Learning vs Deep Learning", "id": "machine-learning-vs-deep-learning", "youtubeId": "", "duracao": "22:15" },
+          { "titulo": "Processamento de Linguagem Natural", "id": "processamento-de-linguagem-natural", "youtubeId": "", "duracao": "18:45" }
+        ]
+      },
+      {
+        "titulo": "Primeiros Projetos Práticos",
+        "aulas": [
+          {
+            "titulo": "Criando seu primeiro chatbot",
+            "id": "criando-seu-primeiro-chatbot",
+            "youtubeId": "Kp19ujHfXb8",
+            "duracao": "35:20",
+            "materiais": [
+              { "label": "Código fonte do projeto", "url": "https://github.com/iaxplor/templates/tree/main/projetos/primeiro-chatbot", "isTemplate": true, "featured": true },
+              { "label": "Guia passo a passo", "url": "https://github.com/iaxplor/templates/blob/main/projetos/primeiro-chatbot/guia.md", "isTemplate": true },
+              { "label": "Projeto final completo", "url": "https://github.com/iaxplor/templates/releases", "isTemplate": false }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "agentes-ia",
+    "titulo": "Agentes de IA",
+    "nivel": "Intermediário",
+    "cover": "/assets/img/covers/agentes.svg",
+    "descricao": "Crie e implemente agentes conversacionais e integrações.",
+    "modulos": [
+      {
+        "titulo": "Conceitos de Agentes Inteligentes",
+        "aulas": [ { "titulo": "Arquitetura de agentes de IA", "id": "arquitetura-de-agentes-de-ia", "youtubeId": "", "duracao": "28:10" } ]
+      },
+      {
+        "titulo": "Criação de Agentes Conversacionais",
+        "aulas": [
+          { "titulo": "Desenvolvendo com OpenAI GPT", "id": "desenvolvendo-com-openai-gpt", "youtubeId": "", "duracao": "42:30" },
+          { "titulo": "Integração com WhatsApp Business", "id": "integracao-com-whatsapp-business", "youtubeId": "", "duracao": "25:15" }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "automacoes-avancadas",
+    "titulo": "Automações Avançadas",
+    "nivel": "Avançado",
+    "cover": "/assets/img/covers/automacoes.svg",
+    "descricao": "Workflows automatizados e integrações escaláveis.",
+    "modulos": [
+      {
+        "titulo": "Workflows Automatizados",
+        "aulas": [ { "titulo": "Criando pipelines de automação", "id": "criando-pipelines-de-automacao", "youtubeId": "", "duracao": "38:20" } ]
+      }
+    ]
+  }
+]
+

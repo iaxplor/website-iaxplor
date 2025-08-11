@@ -270,6 +270,7 @@
 .video-duration { color: var(--text-secondary); font-size: .875rem; }
 
 .download-section { background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; margin-top: 1rem; }
+.download-section[hidden] { display: none !important; }
 .download-section h4 { margin-bottom: 1rem; color: var(--text-primary); }
 .download-list { display: flex; flex-direction: column; gap: .5rem; }
 

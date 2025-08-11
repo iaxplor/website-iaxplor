@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="/styles.css" />
-   <link rel="stylesheet" href="/assets/css/content.css" />
+  <link rel="stylesheet" href="/styles.css?v=20250810" />
+  <link rel="stylesheet" href="/assets/css/content.css?v=20250810" />
   
 </head>
 <body>
@@ -58,7 +58,7 @@
         <div id="player" class="course-frame"></div>
         <div class="course-info">
           <div id="lesson-title" class="course-title"></div>
-          <span id="overall" class="overall-progress">0%</span>
+          <span id="overall" class="overall-progress" aria-live="polite">0%</span>
           <div class="course-nav">
             <button id="prevLesson" class="nav-btn">← Aula anterior</button>
             <button id="nextLesson" class="nav-btn">Próxima aula →</button>
@@ -66,7 +66,7 @@
           </div>
           <button id="completeBtn" class="complete-btn">Marcar como concluída</button>
         </div>
-       <div id="materials" class="download-section course-materials" style="display:none;"></div>
+        <div id="materials" class="download-section course-materials" hidden></div>
       </section>
       <aside class="course-sidebar">
         <h3 id="sidebar-title">Aulas</h3>

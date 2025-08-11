@@ -302,7 +302,7 @@
         const mat = document.getElementById('materials');
         mat.innerHTML = '';
         if (Array.isArray(aula.materiais) && aula.materiais.length) {
-          mat.style.display = '';
+          mat.hidden = false;
           mat.innerHTML = '<h4>📁 Materiais da Aula</h4>';
            const list = document.createElement('div');
           list.className = 'download-list';
@@ -328,7 +328,7 @@
           });
           mat.appendChild(list);
         } else {
-          mat.style.display = 'none';
+          mat.hidden = true;
         }
 
         // marca item ativo
